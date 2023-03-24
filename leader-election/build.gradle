@@ -1,0 +1,45 @@
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'demo.election.LeaderElection'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation(group: 'org.apache.curator', name: 'curator-recipes', version: '4.0.0') {
+        exclude group: 'org.jboss.netty', module: 'netty'
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
+    implementation group: 'com.google.guava', name: 'guava', version: '31.0.1-jre'
+
+    //lombok
+    compileOnly 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+}
+
+jar {
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+    manifest {
+        attributes "Main-Class": "demo.election.LeaderElection"
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs 'src/main/java'
+        }
+    }
+}
+
+clean {
+    delete "build"
+}
