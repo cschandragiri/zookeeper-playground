@@ -1,0 +1,103 @@
+version: '3.7'
+
+services:
+  zoo1:
+    image: zookeeper
+    restart: always
+    hostname: zoo1
+    ports:
+      - 2181:2181
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181
+
+  zoo2:
+    image: zookeeper
+    restart: always
+    hostname: zoo2
+    ports:
+      - 2182:2181
+    environment:
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181
+
+  zoo3:
+    image: zookeeper
+    restart: always
+    hostname: zoo3
+    ports:
+      - 2183:2181
+    environment:
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181
+
+  zoonavigator:
+    container_name: zoonavigator
+    image: elkozmon/zoonavigator
+    ports:
+      - 9000:9000
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+
+  instance1:
+    build: .
+    image: barrier_snippet
+    env_file: .env
+    environment:
+      - INSTANCE_ID=1
+    command: sh -c 'sleep 5 && java -jar /home/barrier/build/libs/zookeeper-playground.jar'
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+
+  instance2:
+    build: .
+    image: barrier_snippet
+    env_file: .env
+    environment:
+      - INSTANCE_ID=2
+    command: sh -c 'sleep 15 && java -jar /home/barrier/build/libs/zookeeper-playground.jar'
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+
+  instance3:
+    build: .
+    image: barrier_snippet
+    env_file: .env
+    environment:
+      - INSTANCE_ID=3
+    command: sh -c 'sleep 5 && java -jar /home/barrier/build/libs/zookeeper-playground.jar'
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+
+  instance4:
+    build: .
+    image: barrier_snippet
+    env_file: .env
+    environment:
+      - INSTANCE_ID=4
+    command: sh -c 'sleep 15 && java -jar /home/barrier/build/libs/zookeeper-playground.jar'
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+
+  instance5:
+    build: .
+    image: barrier_snippet
+    env_file: .env
+    environment:
+      - INSTANCE_ID=5
+    command: sh -c 'sleep 5 && java -jar /home/barrier/build/libs/zookeeper-playground.jar'
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+
