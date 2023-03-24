@@ -28,9 +28,9 @@ public class Barrier {
 
     public static void main(String[] args) throws Exception {
         log.info("Initializing Instance-" + getenv("INSTANCE_ID"));
-        Random random = new Random();
-        CuratorFramework client = CuratorFrameworkFactory.newClient(ZK_CONNECTION_STRING, retryPolicy);
-        DistributedDoubleBarrier barrier = new DistributedDoubleBarrier(client,
+        final Random random = new Random();
+        final CuratorFramework client = CuratorFrameworkFactory.newClient(ZK_CONNECTION_STRING, retryPolicy);
+        final DistributedDoubleBarrier barrier = new DistributedDoubleBarrier(client,
                 format(zkNodePath, groupName, NUMBER_OF_SERVICE_INSTANCES), NUMBER_OF_SERVICE_INSTANCES);
         client.start();
         while (true) {

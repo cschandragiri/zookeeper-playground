@@ -1,22 +1,34 @@
+# using multistage docker build
+# ref: https://docs.docker.com/build/building/multi-stage/
+
+#### Do gradle build inside a container ####
+FROM gradle:jdk11 AS BUILD_IMAGE
+ENV APP_HOME=/usr/gradle/
+WORKDIR $APP_HOME
+COPY build.gradle settings.gradle $APP_HOME
+COPY gradle $APP_HOME/gradle
+
+# --chown=<user>:<group>, ensures that the new files and directories that are
+# created have the specified user and group ownership applied.
+COPY --chown=gradle:gradle . /home/gradle/src
+USER root
+RUN chown -R gradle /home/gradle/src
+COPY . .
+RUN gradle clean build
+
+#### Use the following lines only if you need to debug the gradle build running inside docker ####
+# CMD sleep infinity
+# To debug, docker build . --tag gradle-build/barrier:1 and then run docker run gradle-build/barrier:1
+# and then ssh into the gradle-build/barrier:1 container
+#### end ####
+
 FROM openjdk:11
+ENV ARTIFACT_NAME=barrier.jar
+ENV APP_HOME=/home/demo/build/libs/
+WORKDIR $APP_HOME
+COPY --from=BUILD_IMAGE /usr/gradle/build/libs/$ARTIFACT_NAME .
 
-# add the build dependencies
-RUN echo "Installing dependencies" \
-     && apt update  \
-     && apt install \
-                zip \
-    #            linux-cpupower -y \
-    && /bin/bash -c 'curl -s "https://get.sdkman.io" | bash' \
-    && echo "Finished installing dependencies"
-
-# copy current source code into the container
-ADD . /home/barrier
-WORKDIR /home/barrier
-
-RUN echo "Building source code" \
-    && /bin/bash -c 'source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk install gradle && gradle assemble' \
-     # remove gradle and all dependencies
-     && rm -rf $HOME/.sdkman/candidates/gradle $HOME/.sdkman/archives/gradle  $HOME/.gradle \
-     && echo "Code built"
-
+#### debugging ####
+#CMD sleep infinity
 CMD /bin/bash
+

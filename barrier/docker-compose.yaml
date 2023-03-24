@@ -43,11 +43,11 @@ services:
 
   instance1:
     build: .
-    image: barrier_snippet
+    image: barrier
     env_file: .env
     environment:
       - INSTANCE_ID=1
-    command: sh -c 'sleep 5 && java -jar /home/barrier/build/libs/zookeeper-playground.jar'
+    command: sh -c 'sleep 5 && java -jar /home/demo/build/libs/barrier.jar'
     depends_on:
       - zoo1
       - zoo2
@@ -55,11 +55,11 @@ services:
 
   instance2:
     build: .
-    image: barrier_snippet
+    image: barrier
     env_file: .env
     environment:
       - INSTANCE_ID=2
-    command: sh -c 'sleep 15 && java -jar /home/barrier/build/libs/zookeeper-playground.jar'
+    command: sh -c 'sleep 15 && java -jar /home/demo/build/libs/barrier.jar'
     depends_on:
       - zoo1
       - zoo2
@@ -67,11 +67,11 @@ services:
 
   instance3:
     build: .
-    image: barrier_snippet
+    image: barrier
     env_file: .env
     environment:
       - INSTANCE_ID=3
-    command: sh -c 'sleep 5 && java -jar /home/barrier/build/libs/zookeeper-playground.jar'
+    command: sh -c 'sleep 5 && java -jar /home/demo/build/libs/barrier.jar'
     depends_on:
       - zoo1
       - zoo2
@@ -79,11 +79,11 @@ services:
 
   instance4:
     build: .
-    image: barrier_snippet
+    image: barrier
     env_file: .env
     environment:
       - INSTANCE_ID=4
-    command: sh -c 'sleep 15 && java -jar /home/barrier/build/libs/zookeeper-playground.jar'
+    command: sh -c 'sleep 15 && java -jar /home/demo/build/libs/barrier.jar'
     depends_on:
       - zoo1
       - zoo2
@@ -91,11 +91,11 @@ services:
 
   instance5:
     build: .
-    image: barrier_snippet
+    image: barrier
     env_file: .env
     environment:
       - INSTANCE_ID=5
-    command: sh -c 'sleep 5 && java -jar /home/barrier/build/libs/zookeeper-playground.jar'
+    command: sh -c 'sleep 5 && java -jar /home/demo/build/libs/barrier.jar'
     depends_on:
       - zoo1
       - zoo2
