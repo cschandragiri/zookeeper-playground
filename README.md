@@ -6,5 +6,5 @@ instances running the curator client and the recipe to execute. The temporary an
 can be visualized using zoonavigator portal running at port 9000.
 
 #### List of recipes:
-- [Distributed Barrier](barrier/README.md)
+- [Distributed Double Barrier](barrier/README.md)
 - [Leader Election](leader-election/README.md)
