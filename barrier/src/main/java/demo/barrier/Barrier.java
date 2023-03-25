@@ -28,27 +28,27 @@ public class Barrier {
 
     public static void main(String[] args) throws Exception {
         log.info("Initializing Instance-" + getenv("INSTANCE_ID"));
-        final Random random = new Random();
         final CuratorFramework client = CuratorFrameworkFactory.newClient(ZK_CONNECTION_STRING, retryPolicy);
         final DistributedDoubleBarrier barrier = new DistributedDoubleBarrier(client,
                 format(zkNodePath, groupName, NUMBER_OF_SERVICE_INSTANCES), NUMBER_OF_SERVICE_INSTANCES);
         client.start();
         while (true) {
-            //do some work like video encoding of partial file
-            Thread.sleep(random.nextInt(5000) + 1000);
-            //once work is completed, wait for other instances to wrap up their work. See DistributedDoubleBarrier
             waitForOtherClients(client, barrier);
-            //since all instances have finished their respective tasks we had been waiting, safe to proceed
         }
     }
 
     public static void waitForOtherClients(final CuratorFramework client,
                                            final DistributedDoubleBarrier barrier) throws Exception {
+        final Random random = new Random();
         // block until connection is established
         client.blockUntilConnected();
-        log.info("Node:" + getenv("INSTANCE_ID") + " waiting on the barrier.");
+        //Do some work before entering barrier
+        Thread.sleep(random.nextInt(5000) + 1000);
         barrier.enter();
-        log.info("Node:" + getenv("INSTANCE_ID") + " leaving the barrier.");
+        log.info("Node:" + getenv("INSTANCE_ID") + " entered first barrier.");
+        //Do some work after entering barrier
+        Thread.sleep(random.nextInt(5000) + 1000);
         barrier.leave();
+        log.info("Node:" + getenv("INSTANCE_ID") + " left the second barrier.");
     }
 }
