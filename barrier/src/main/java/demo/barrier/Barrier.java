@@ -37,7 +37,7 @@ public class Barrier {
         }
     }
 
-    public static void waitForOtherClients(final CuratorFramework client,
+    private static void waitForOtherClients(final CuratorFramework client,
                                            final DistributedDoubleBarrier barrier) throws Exception {
         final Random random = new Random();
         // block until connection is established

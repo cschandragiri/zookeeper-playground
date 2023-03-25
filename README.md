@@ -8,3 +8,4 @@ can be visualized using zoonavigator portal running at port 9000.
 #### List of recipes:
 - [Distributed Double Barrier](barrier/README.md)
 - [Leader Election](leader-election/README.md)
+- [Distributed Reentrant Lock](reentrant-lock/README.md)

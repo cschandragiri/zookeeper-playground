@@ -10,3 +10,4 @@
 rootProject.name = 'basic-multiproject'
 include 'barrier'
 include 'leader-election'
+include 'reentrant-lock'
