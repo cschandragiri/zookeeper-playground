@@ -11,5 +11,5 @@ Example of distributed barrier in zookeeper with apache curator. In this example
 # Setup
 - Build & run the docker container:
   ```docker-compose up --build```
-- To check ZK znodes see visit http://localhost:9000/ ; connection string: `zoo1:2181,zoo2:2181,zoo3:2181`
+- To check ZK znodes see visit http://localhost:9000/ , connection string: `zoo1:2181,zoo2:2181,zoo3:2181`
 
