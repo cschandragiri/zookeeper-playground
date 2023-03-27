@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-mainClassName = 'demo.lock.ReentrantLock'
+mainClassName = 'demo.service.ServiceDiscovery'
 
 repositories {
     mavenCentral()
@@ -13,7 +13,9 @@ dependencies {
         exclude group: 'org.jboss.netty', module: 'netty'
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
     }
+    implementation group: 'org.apache.curator', name: 'curator-x-discovery', version: '5.3.0'
     implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
 
     //lombok
     compileOnly 'org.projectlombok:lombok:1.18.26'
@@ -23,7 +25,7 @@ dependencies {
 jar {
     duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
     manifest {
-        attributes "Main-Class": "demo.lock.ReentrantLock"
+        attributes "Main-Class": "demo.service.ServiceDiscovery"
     }
 
     from {

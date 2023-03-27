@@ -1,13 +1,14 @@
 package demo.election;
 
+import static java.lang.System.getenv;
+
 import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
+
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.leader.LeaderSelectorListenerAdapter;
 
 import java.util.Random;
-
-import static java.lang.System.getenv;
 
 @Log
 @NoArgsConstructor
