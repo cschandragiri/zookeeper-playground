@@ -7,7 +7,7 @@ can be visualized using zoonavigator portal running at port 9000.
 
 #### List of curator recipes:
 
-- [Distributed Double Barrier](barrier/README.md)
-- [Leader Election](leader-election/README.md)
-- [Distributed Reentrant Lock](reentrant-lock/README.md)
-- [Service Discovery](service-discovery/README.md)
+- [Distributed Double Barrier](barrier/)
+- [Leader Election](leader-election/)
+- [Distributed Reentrant Lock](reentrant-lock/)
+- [Service Discovery](service-discovery/)
